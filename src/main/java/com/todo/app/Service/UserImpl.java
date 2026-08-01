@@ -69,7 +69,7 @@ public class UserImpl implements User {
         }
 
         if (user.getPassword() != null) {
-            existingUser.setPassword(user.getPassword());
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         UserEntity userEntity = userRepository.save(existingUser);
