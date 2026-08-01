@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RequestMapping("/api")
-public interface todoApp {
+public interface UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Response<UserDTO>> getUser(@PathVariable UUID id);
 

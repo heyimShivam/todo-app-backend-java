@@ -1,7 +1,6 @@
 package com.todo.app.Controller;
 
 import com.todo.app.DTO.UserDTO;
-import com.todo.app.Service.UserImpl;
 import com.todo.app.Utility.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-public class todoAppImpl implements todoApp {
-    private final UserImpl userImpl;
+public class UserControllerImpl implements UserController {
+    private final com.todo.app.Service.UserImpl userImpl;
 
-    public todoAppImpl(UserImpl userImpl) {
+    public UserControllerImpl(com.todo.app.Service.UserImpl userImpl) {
         this.userImpl = userImpl;
     }
     @Override

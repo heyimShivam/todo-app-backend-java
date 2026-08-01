@@ -65,6 +65,29 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!-- JJWT API: Provides interfaces and classes to create, parse, and validate JWT tokens -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+
+		<!-- JJWT Implementation: Contains the actual implementation of JWT operations.
+             Required at runtime for signing, parsing, and verifying JWT tokens -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+
+		<!-- JJWT Jackson: Adds JSON serialization/deserialization support using Jackson.
+             Used for converting JWT claims (payload data) into JSON objects -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

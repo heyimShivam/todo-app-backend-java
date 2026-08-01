@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> genericException(Exception ex) {
         ErrorResponse error = new ErrorResponse(
-                "Something went wrong",
+                "Something went wrong" + ex.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value()
         );
 
