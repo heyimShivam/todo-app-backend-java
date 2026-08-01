@@ -3,5 +3,7 @@ package com.todo.app.Repository;
 import com.todo.app.Entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 }

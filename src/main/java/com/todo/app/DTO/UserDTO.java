@@ -1,9 +1,16 @@
 package com.todo.app.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO {
     String name;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
     String email;
+
+    public UserDTO() {
+    }
 
     public UserDTO(String name, String email, String password) {
         this.name = name;

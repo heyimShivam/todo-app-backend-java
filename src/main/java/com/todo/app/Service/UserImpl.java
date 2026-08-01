@@ -4,22 +4,28 @@ import com.todo.app.DTO.UserDTO;
 import com.todo.app.Entity.UserEntity;
 import com.todo.app.Repository.UserRepository;
 import com.todo.app.Utility.UserNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class UserImpl implements User {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserImpl(UserRepository userRepository) {
+    public UserImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String postNewUser(UserDTO user) {
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         UserEntity entity = new UserEntity(
                 user.getName(),
                 user.getEmail(),
-                user.getPassword()
+                hashedPassword
         );
 
         UserEntity savedUser = userRepository.save(entity);
@@ -27,7 +33,7 @@ public class UserImpl implements User {
     }
 
     @Override
-    public UserDTO getUser(Long id) {
+    public UserDTO getUser(UUID id) {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() ->  new UserNotFoundException(id));
 
@@ -35,7 +41,7 @@ public class UserImpl implements User {
     }
 
     @Override
-    public UserDTO patchUser(Long id, UserDTO user) {
+    public UserDTO patchUser(UUID id, UserDTO user) {
 
         UserEntity existingUser = userRepository.findById(id)
                 .orElseThrow(() ->  new UserNotFoundException(id));
@@ -57,7 +63,7 @@ public class UserImpl implements User {
     }
 
     @Override
-    public String deleteUser(Long id) {
+    public String deleteUser(UUID id) {
 
         UserEntity existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
