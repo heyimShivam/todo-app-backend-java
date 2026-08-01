@@ -1,12 +1,16 @@
 package com.todo.app.Service;
 
+import com.todo.app.DTO.TaskDTO;
 import com.todo.app.DTO.UserDTO;
+import com.todo.app.Entity.TaskEntity;
 import com.todo.app.Entity.UserEntity;
 import com.todo.app.Repository.UserRepository;
 import com.todo.app.Utility.UserNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -37,7 +41,17 @@ public class UserImpl implements User {
         UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(() ->  new UserNotFoundException(id));
 
-        return new UserDTO(userEntity.getName(), userEntity.getEmail(), userEntity.getPassword());
+        List<TaskDTO> tasks = userEntity.getTasks()
+                .stream()
+                .map(value -> new TaskDTO(
+                        value.getId(),
+                        value.getDescription(),
+                        value.getPriority(),
+                        value.isCompleted()
+                ))
+                .toList();
+
+        return new UserDTO(userEntity.getName(), userEntity.getEmail(), userEntity.getPassword(), tasks);
     }
 
     @Override
@@ -59,7 +73,18 @@ public class UserImpl implements User {
         }
 
         UserEntity userEntity = userRepository.save(existingUser);
-        return new UserDTO(userEntity.getName(), userEntity.getEmail(), userEntity.getPassword());
+
+        List<TaskDTO> tasks = userEntity.getTasks()
+                .stream()
+                .map(value -> new TaskDTO(
+                        value.getId(),
+                        value.getDescription(),
+                        value.getPriority(),
+                        value.isCompleted()
+                ))
+                .toList();
+
+        return new UserDTO(userEntity.getName(), userEntity.getEmail(), userEntity.getPassword(), tasks);
     }
 
     @Override

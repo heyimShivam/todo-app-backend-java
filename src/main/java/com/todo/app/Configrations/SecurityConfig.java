@@ -1,4 +1,4 @@
-package com.todo.app.Utility;
+package com.todo.app.Configrations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -2,6 +2,8 @@ package com.todo.app.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +21,13 @@ public class UserEntity {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<TaskEntity> tasks = new ArrayList<>();
+
     public UserEntity() {
     }
 
@@ -26,6 +35,22 @@ public class UserEntity {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.tasks = new ArrayList<>();
+    }
+
+    public UserEntity(String name, String email, String password, List<TaskEntity> tasks) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.tasks = tasks;
+    }
+
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
     }
 
     public String getName() {
@@ -54,5 +79,15 @@ public class UserEntity {
 
     public UUID getId() {
         return id;
+    }
+
+    public void addTask(TaskEntity task) {
+        tasks.add(task);
+        task.setUser(this);
+    }
+
+    public void removeTask(TaskEntity task) {
+        tasks.remove(task);
+        task.setUser(null);
     }
 }
